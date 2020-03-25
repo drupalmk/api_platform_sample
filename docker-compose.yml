@@ -11,3 +11,14 @@ php:
     image: php:7-fpm
     volumes:
     - ./api:/api
+    links:
+        - db
+db:
+   image: mysql:5.7
+   environment:
+     MYSQL_ROOT_PASSWORD: password
+     MYSQL_DATABASE: symfony
+     MYSQL_USER: symfony
+     MYSQL_PASSWORD: symfony
+   ports:
+     - "9906:3306"
