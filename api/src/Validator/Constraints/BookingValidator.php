@@ -17,14 +17,14 @@ class BookingValidator extends ConstraintValidator {
         /** @var Booking $booking */
         if ($booking->getStartAt() <= new \DateTime('now')) {
             $this->context->buildViolation('Start date {{ start_date }} cannot be in the past.')
-                    ->setParameter('{{ start_date }}', $booking->getStartAt()->format(Booking::$date_format))
+                    ->setParameter('{{ start_date }}', $booking->getStartAt()->format(Booking::DATE_FORMAT))
                     ->atPath('startAt')
                     ->addViolation();
         }
 
         if ($booking->getEndAt() <= $booking->getStartAt()) {
             $this->context->buildViolation('End date {{ end_date }} must be greater than start date.')
-                    ->setParameter('{{ end_date }}', $booking->getEndAt()->format(Booking::$date_format))
+                    ->setParameter('{{ end_date }}', $booking->getEndAt()->format(Booking::DATE_FORMAT))
                     ->atPath('endAt')
                     ->addViolation();
         }
@@ -33,8 +33,8 @@ class BookingValidator extends ConstraintValidator {
 
         $this->validateHour($booking->getStartAt(), 'startAt', array(
                 'options' => array(
-                    'min_range' => Booking::$start_hour,
-                    'max_range' => Booking::$end_hour - 1,
+                    'min_range' => Booking::START_HOUR,
+                    'max_range' => Booking::END_HOUR - 1,
                 ),
             ),
             $constraint
@@ -42,16 +42,20 @@ class BookingValidator extends ConstraintValidator {
 
         $this->validateHour($booking->getEndAt(), 'endAt', array(
                 'options' => array(
-                    'min_range' => Booking::$start_hour,
-                    'max_range' => Booking::$end_hour,
+                    'min_range' => Booking::START_HOUR,
+                    'max_range' => Booking::END_HOUR,
                 ),
             ),
             $constraint
         );
+        
+        
+        
+       
     }
 
     private function validateMinutes(\DateTimeInterface $dt, string $property_path): void {
-        if (!in_array((int) $dt->format('i'), [0, Booking::$min_duration_in_minutes])) {
+        if (!in_array((int) $dt->format('i'), [0, Booking::MIN_DURATION_IN_MINUTES])) {
             $this->context->buildViolation('We accept only full hours or half hours bookings')
                     ->atPath($property_path)
                     ->addViolation();
@@ -67,8 +71,8 @@ class BookingValidator extends ConstraintValidator {
 
         if (!$hour_valid) {
             $this->context->buildViolation($constraint->opening_hours_message)
-                    ->setParameter('{{ start_hour }}', Booking::$start_hour)
-                    ->setParameter('{{ end_hour }}', Booking::$end_hour)
+                    ->setParameter('{{ start_hour }}', Booking::START_HOUR)
+                    ->setParameter('{{ end_hour }}', Booking::END_HOUR)
                     ->atPath($property_path)
                     ->addViolation();
         }

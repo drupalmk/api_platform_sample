@@ -14,13 +14,13 @@ use App\Validator\Constraints\Booking as BookingAssert;
  */
 class Booking
 {
-    public static $date_format = 'Y-m-s H:i';
+    const DATE_FORMAT = 'Y-m-s H:i';
     
-    public static $start_hour = 8;
+    const START_HOUR = 8;
     
-    public static $end_hour = 20;
+    const END_HOUR = 20;
     
-    public static $min_duration_in_minutes = 30;
+    const MIN_DURATION_IN_MINUTES = 30;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
