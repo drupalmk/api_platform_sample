@@ -11,7 +11,8 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class BookingValidator extends ConstraintValidator {
 
-    public function validate($booking, Constraint $constraint) {
+    public function validate($booking, Constraint $constraint) 
+    {
         // @TODO refactor property paths into constants.
 
         /** @var Booking $booking */
@@ -54,7 +55,8 @@ class BookingValidator extends ConstraintValidator {
        
     }
 
-    private function validateMinutes(\DateTimeInterface $dt, string $property_path): void {
+    private function validateMinutes(\DateTimeInterface $dt, string $property_path): void 
+    {
         if (!in_array((int) $dt->format('i'), [0, Booking::MIN_DURATION_IN_MINUTES])) {
             $this->context->buildViolation('We accept only full hours or half hours bookings')
                     ->atPath($property_path)
@@ -62,7 +64,8 @@ class BookingValidator extends ConstraintValidator {
         }
     }
 
-    private function validateHour(\DateTimeInterface $dt, string $property_path, array $options, Constraint $constraint): void {
+    private function validateHour(\DateTimeInterface $dt, string $property_path, array $options, Constraint $constraint): void 
+    {
         $hour_valid = filter_var(
                 (int) $dt->format('H'),
                 FILTER_VALIDATE_INT,
