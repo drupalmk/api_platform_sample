@@ -22,17 +22,12 @@ class Booking
     private $barber_id;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
-
-    /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="datetime")
      */
     private $start_at;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="datetime")
      */
     private $end_at;
 
@@ -49,18 +44,6 @@ class Booking
     public function setBarberId(int $barber_id): self
     {
         $this->barber_id = $barber_id;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }
