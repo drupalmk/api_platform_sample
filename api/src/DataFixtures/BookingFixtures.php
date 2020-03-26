@@ -11,7 +11,8 @@ class BookingFixtures extends Fixture {
     public function load(ObjectManager $manager) {
         foreach ($this->getBookingData() as $booking_data) {
             list($barber_id, $days_from_now, $start_hour, $start_minutes, $end_hour, $end_minutes) = $booking_data;
-            $booking = new Booking($barber_id);
+            $booking = new Booking();
+            $booking->setBarberId($barber_id);
             $booking->setStartAt($this->createDateTime($days_from_now, $start_hour, $start_minutes));
             $booking->setEndAt($this->createDateTime($days_from_now, $end_hour, $end_minutes));
             $manager->persist($booking);

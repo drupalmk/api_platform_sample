@@ -32,10 +32,6 @@ class Booking
      * @ORM\Column(type="datetime")
      */
     private $end_at;
-    
-    public function __construct(int $barder_id) {
-        $this->barber_id = $barder_id;
-    }
 
     public function getId(): ?int
     {
