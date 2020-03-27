@@ -18,6 +18,39 @@ class BookingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Booking::class);
     }
+    
+    public function findBookingsBetween(\DateTimeInterface $start_at, \DateTimeInterface $end_at) 
+    {
+        $start = $start_at->format(Booking::DATE_FORMAT);
+        $end = $end_at->format(Booking::DATE_FORMAT);
+        return $this->createQueryBuilder('b')
+                ->andWhere('b.start_at >= :start AND b.start_at < :end')
+                ->orWhere('b.end_at <= :end AND b.end_at > :start')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end)
+                ->orderBy('b.start_at', 'ASC')
+                ->getQuery()
+                ->getResult();      
+    }
+    
+    
+    
+    public function countBarberBookingsBetween(int $barber_id, \DateTimeInterface $start_at, \DateTimeInterface $end_at) : int 
+    {
+        $start = $start_at->format(Booking::DATE_FORMAT);
+        $end = $end_at->format(Booking::DATE_FORMAT);
+
+        $query = $this->createQueryBuilder('b')
+                ->select('count(b.id)')
+                ->andWhere('b.barber_id = :barber_id')
+                ->andWhere('(b.start_at >= :start AND b.start_at < :end) OR (b.end_at <= :end AND b.end_at > :start)')
+                ->setParameter('barber_id', $barber_id)
+                ->setParameter('start', $start)
+                ->setParameter('end', $end)
+                ->getQuery();
+
+        return $query->getSingleScalarResult();  
+    }
 
     // /**
     //  * @return Booking[] Returns an array of Booking objects

@@ -17,22 +17,6 @@ class BookingFixtures extends Fixture {
             $booking->setEndAt($this->createDateTime($days_from_now, $end_hour, $end_minutes));
             $manager->persist($booking);
         }
-//        $booking = new Booking(1);
-//        $booking->setStartAt($this->createDateTime(2, 9, 30));
-//        $booking->setEndAt($this->createDateTime(2, 10, 0));
-//        $manager->persist($booking);
-//
-//        $booking = new Booking(1);
-//        $booking->setStartAt($this->createDateTime(2, 10, 0));
-//        $booking->setEndAt($this->createDateTime(2, 12, 0));
-//        $manager->persist($booking);
-//
-//        $booking = new Booking(1);
-//        $booking->setStartAt($this->createDateTime(2, 10, 0));
-//        $booking->setEndAt($this->createDateTime(2, 12, 0));
-//        $manager->persist($booking);
-
-
         $manager->flush();
     }
 
@@ -46,6 +30,12 @@ class BookingFixtures extends Fixture {
             ],
             [
                 2, 2, 11, 0, 12, 30
+            ],
+            [
+                1, 1, 11, 0, 11, 30
+            ],
+            [
+                1, 1, 12, 0, 12, 30
             ],
         ];
     }
