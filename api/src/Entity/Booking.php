@@ -9,18 +9,45 @@ use App\Validator\Constraints\Booking as BookingAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={"get", "post", "find_between" = {
+ *          "method"="GET",
+ *          "path"="/bookings/find_between",
+ *          "openapi_context" = {
+ *                  "parameters" = {
+ *                      {
+ *                          "name" = "startAt",
+ *                          "in" = "query",
+ *                          "description" = "Start date & time for bookings retrieval",
+ *                          "required" = "true",
+ *                          "type" : "string",
+ *                          "format" : "date-time"
+ *                      },
+ *                      {
+ *                          "name" = "endAt",
+ *                          "in" = "query",
+ *                          "description" = "End date & time for bookings retrieval",
+ *                          "required" = "true",
+ *                          "type" : "string",
+ *                          "format" : "date-time"
+ *                      }
+ *                  }
+ *               }
+ *          }
+ *     },
+ * )
  * @BookingAssert
  */
 class Booking
 {
-    const DATE_FORMAT = 'Y-m-s H:i';
+    const DATE_FORMAT = 'Y-m-d H:i';
     
     const START_HOUR = 8;
     
     const END_HOUR = 20;
     
     const MIN_DURATION_IN_MINUTES = 30;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -43,7 +70,6 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     *      
      */
     private $end_at;
 
